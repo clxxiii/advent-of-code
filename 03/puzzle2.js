@@ -1,21 +1,34 @@
 const fs = require("fs");
-// let data = fs.readFileSync("../data/raw/03.txt");
+const data = fs.readFileSync("./input.txt");
 
-data =
-	"00100\n11110\n10110\n10111\n10101\n01111\n00111\n11100\n10000\n11001\n00010\n01010";
+// const data =
+// 	"00100\n11110\n10110\n10111\n10101\n01111\n00111\n11100\n10000\n11001\n00010\n01010";
 
-data = data.toString().split("\n");
+let output = "";
 
-console.log(dataChecker(data, true));
+let tempData = data.toString().split("\n");
+let oxygen = dataChecker(tempData, true, 0);
 
-function dataChecker(data, checkOxy, i) {
-	console.log(data[0].length);
+tempData = data.toString().split("\n");
+let CO2 = dataChecker(tempData, false, 0);
+
+console.log(`Oxygen: ${oxygen} (${parseInt(oxygen, 2)})`);
+console.log(`CO2: ${CO2} (${parseInt(CO2, 2)})`);
+
+console.log(
+	`${parseInt(CO2, 2)} * ${parseInt(oxygen, 2)} = ${
+		parseInt(CO2, 2) * parseInt(oxygen, 2)
+	}`
+);
+
+function dataChecker(arr, checkOxy, i) {
 	let zeroes = 0;
 	let ones = 0;
 	let zeroIndexes = [];
 	let oneIndexes = [];
-	for (v = 0; v < data.length; v++) {
-		let character = data[v][i];
+
+	for (v = 0; v < arr.length; v++) {
+		let character = arr[v][i];
 		if (character == "0") {
 			zeroes++;
 			zeroIndexes.push(v);
@@ -25,21 +38,30 @@ function dataChecker(data, checkOxy, i) {
 		}
 	}
 	console.log(
-		`Zeroes: ${zeroes}\nOnes: ${ones}\nZero Indexes: ${zeroIndexes}\nOne Indexes: ${oneIndexes}`
+		`Zeroes: ${zeroes} | Ones: ${ones} | Zero Indexes: ${zeroIndexes} | One Indexes: ${oneIndexes}`
 	);
 	if (checkOxy) {
 		if (ones >= zeroes) {
-			data = removeIndexes(data, zeroIndexes);
+			arr = removeIndexes(arr, zeroIndexes);
 		} else {
-			data = removeIndexes(data, oneIndexes);
+			arr = removeIndexes(arr, oneIndexes);
+		}
+	} else {
+		if (ones < zeroes) {
+			arr = removeIndexes(arr, zeroIndexes);
+		} else {
+			arr = removeIndexes(arr, oneIndexes);
 		}
 	}
-
-	// return data;
+	console.log(arr);
+	if (arr.length > 1) {
+		dataChecker(arr, checkOxy, ++i);
+	}
+	return arr[0];
 }
 
 function removeIndexes(arr, indexes) {
-	for (i = 0; i < indexes.length; i++) {
+	for (i = indexes.length - 1; i >= 0; i--) {
 		arr.splice(indexes[i], 1);
 	}
 	return arr;
