@@ -1,9 +1,8 @@
 const fs = require("fs");
 
 const puzzleData = fs
-	.readFileSync(
-		"D:\\Users\\clxxiii\\Documents\\Coding Projects\\advent-of-code\\04\\input.txt"
-	)
+	.readFileSync("./input.txt")
+
 	.toString()
 	.replaceAll("\r", "");
 
