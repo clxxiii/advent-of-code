@@ -1,7 +1,9 @@
 const fs = require("fs");
 
 const puzzleData = fs
-	.readFileSync("C:\\Users\\earth\\Documents\\advent-of-code\\04\\given.txt")
+	.readFileSync(
+		"D:\\Users\\clxxiii\\Documents\\Coding Projects\\advent-of-code\\04\\input.txt"
+	)
 	.toString()
 	.replaceAll("\r", "");
 
@@ -11,16 +13,16 @@ const puzzleData = fs
     that represents a stack of bingo cards.
 
     Here are the steps I take in order:
-    1. Split the string across double-linebreaks, putting each
+    1. Split the string across double-line breaks, putting each
     board into an array object, including the top line of bingo calls.
 
-    2. Split each element of the array by single-linebreaks, dividing
+    2. Split each element of the array by single-line breaks, dividing
     each line of the bingo card into it's own array.
 
     3. Split each line of a card into an array of numbers split by
     spaces
 
-    4. Filter out blank spaces in the array to accomodate double spaces
+    4. Filter out blank spaces in the array to accommodate double spaces
 
     5. Remove the first line and assign it to the bingoCall variable
 */
@@ -52,6 +54,7 @@ for (cardCount = 0; cardCount < cards.length; cardCount++) {
 let winningCard;
 let winningIndex;
 let winningCardParallel;
+let winningCallNumber;
 for (i = 0; i < bingoCall.length; i++) {
 	if (!winningCard) {
 		let call = bingoCall[i];
@@ -66,6 +69,7 @@ for (i = 0; i < bingoCall.length; i++) {
 				});
 			});
 			if (bingoCheck(cardIndex)) {
+				winningCallNumber = call;
 				winningIndex = cardIndex;
 				winningCard = card;
 				winningCardParallel = parallel[cardIndex];
@@ -77,33 +81,53 @@ for (i = 0; i < bingoCall.length; i++) {
 		});
 	}
 }
+/*
+ * Post-bingo operations to calculate desired number
+ */
+let remainingCellsOnCard = [];
+let remainingSum = 0;
+winningCardParallel.forEach((row, rowIndex) => {
+	row.forEach((cell, cellIndex) => {
+		if (!cell) {
+			remainingCellsOnCard.push(winningCard[rowIndex][cellIndex]);
+			remainingSum += parseInt(winningCard[rowIndex][cellIndex]);
+		}
+	});
+});
+console.log(
+	`Remaining Numbers: ${remainingCellsOnCard}\nRemaining Number Sum: ${remainingSum}\nNumber to submit: ${remainingSum} * ${winningCallNumber} = ${
+		remainingSum * winningCallNumber
+	}`
+);
 
 function bingoCheck(index) {
 	let currentCard = cards[index];
 	let cardParallel = parallel[index];
-	// All checks are true until proven false
-	let rowCheck = true;
-	let columnCheck = true;
+	let bingo = false;
 	// Check rows
 	for (rowIndex = 0; rowIndex < currentCard.length; rowIndex++) {
-		for (
-			columnIndex = 0;
-			columnIndex < currentCard[0].length;
-			columnIndex++
-		) {
+		// True until proven false
+		let rowCheck = true;
+		for (columnIndex = 0; columnIndex < currentCard[0].length; columnIndex++) {
 			//
 			rowCheck = rowCheck && cardParallel[rowIndex][columnIndex];
 		}
+		// boolean bingo cannot be made false after becoming true
+		bingo = bingo || rowCheck;
 	}
 	// Check Columns
 	for (columnIndex = 0; columnIndex < currentCard[0].length; columnIndex++) {
+		let columnCheck = true;
 		for (rowIndex = 0; rowIndex < currentCard.length; rowIndex++) {
 			//
 			columnCheck = columnCheck && cardParallel[rowIndex][columnIndex];
 		}
+		// boolean bingo cannot be made false after becoming true
+		bingo = bingo || columnCheck;
 	}
 	/*
-    I learned that this assignment doesn't do diagonal checks after writing all this.
+    I learned that this puzzle doesn't do diagonal checks after writing all this.
+
 	// Check first diagonal
 	for (rowIndex = 0; rowIndex < currentCard[0].length; rowIndex++) {
 		let columnIndex = rowIndex;
@@ -118,5 +142,5 @@ function bingoCheck(index) {
 	}
     */
 
-	return rowCheck || columnCheck;
+	return bingo;
 }
