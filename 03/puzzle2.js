@@ -1,12 +1,12 @@
-const fs = require("fs");
-const data = fs.readFileSync("./input.txt");
+import { readFileSync } from "fs";
+const data = readFileSync("./data/raw/03.txt");
 
 // const data =
 // 	"00100\n11110\n10110\n10111\n10101\n01111\n00111\n11100\n10000\n11001\n00010\n01010";
 
 let output = "";
 
-let tempData = data.toString().split("\n");
+let tempData = data.toString().split("\r\n");
 let oxygen = dataChecker(tempData, true, 0);
 
 tempData = data.toString().split("\n");

@@ -1,12 +1,17 @@
-let data = require("../data/parse").getData(1);
+import { readFileSync } from "fs";
 
-console.log(data)
+let data = readFileSync("./data/raw/01.txt")
+	.toString()
+	.split("\r\n")
+	.map((x) => parseInt(x));
 
-// let incrementCounter = 0;
-// for (i = 1; i < data.length; i++) {
-//     if (parseInt(data[i]) > parseInt(data[i - 1])) {
-//         incrementCounter++;
-//     }
-// }
+console.log(data);
 
-// console.log(incrementCounter)
+let incrementCounter = 0;
+for (let i = 1; i < data.length; i++) {
+	if (data[i] > data[i - 1]) {
+		incrementCounter++;
+	}
+}
+
+console.log(incrementCounter);

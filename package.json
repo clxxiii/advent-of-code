@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "My solutions to the 2021 Advend Of Code puzzles",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
