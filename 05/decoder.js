@@ -10,8 +10,8 @@ function decode(str) {
 		let lineData = line.match(regex);
 		if (lineData) {
 			data.push({
-				from: [lineData[1] * 1, lineData[2] * 1],
-				to: [lineData[3] * 1, lineData[4] * 1],
+				from: { x: lineData[1] * 1, y: lineData[2] * 1 },
+				to: { x: lineData[3] * 1, y: lineData[4] * 1 },
 			});
 		}
 	}
