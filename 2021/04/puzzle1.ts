@@ -1,5 +1,10 @@
 import { readFileSync } from "fs";
 
+type cardStack = string[][][];
+type card = string[][];
+type bCardStack = boolean[][][];
+type bCard = boolean[][];
+
 const puzzleData = readFileSync("./2021/data/raw/04.txt")
 	.toString()
 	.replaceAll("\r", "");
@@ -24,22 +29,20 @@ const puzzleData = readFileSync("./2021/data/raw/04.txt")
     5. Remove the first line and assign it to the bingoCall variable
 */
 
-let cards = puzzleData.split("\n\n").map((x) => {
+let cards: cardStack = puzzleData.split("\n\n").map((x) => {
 	return x.split("\n").map((x) => {
-		return x.split(" ").filter((x) => {
-			return !(x == "");
-		});
+		return x.split(" ").filter((x) => x != "");
 	});
 });
 let bingoCall = cards.splice(0, 1)[0][0][0].split(",");
 
 // Create a parallel array of boolean variables:
-let parallel = [];
-for (cardCount = 0; cardCount < cards.length; cardCount++) {
+let parallel: bCardStack = [];
+for (let cardCount = 0; cardCount < cards.length; cardCount++) {
 	let card = [];
-	for (rowCount = 0; rowCount < cards[0].length; rowCount++) {
+	for (let rowCount = 0; rowCount < cards[0].length; rowCount++) {
 		let row = [];
-		for (cellCount = 0; cellCount < cards[0][0].length; cellCount++) {
+		for (let cellCount = 0; cellCount < cards[0][0].length; cellCount++) {
 			row.push(false);
 		}
 		card.push(row);
@@ -48,11 +51,11 @@ for (cardCount = 0; cardCount < cards.length; cardCount++) {
 }
 
 // Play Bingo!
-let winningCard;
-let winningIndex;
-let winningCardParallel;
-let winningCallNumber;
-for (i = 0; i < bingoCall.length; i++) {
+let winningCard: card;
+let winningIndex: number;
+let winningCardParallel: bCard;
+let winningCallNumber: string;
+for (let i = 0; i < bingoCall.length; i++) {
 	if (!winningCard) {
 		let call = bingoCall[i];
 		console.log(`Current Call: ${call}`);
@@ -93,20 +96,20 @@ winningCardParallel.forEach((row, rowIndex) => {
 });
 console.log(
 	`Remaining Numbers: ${remainingCellsOnCard}\nRemaining Number Sum: ${remainingSum}\nNumber to submit: ${remainingSum} * ${winningCallNumber} = ${
-		remainingSum * winningCallNumber
+		remainingSum * parseInt(winningCallNumber)
 	}`
 );
 
-function bingoCheck(index) {
+function bingoCheck(index: number): boolean {
 	let currentCard = cards[index];
 	let cardParallel = parallel[index];
 	let bingo = false;
 	// Check rows
-	for (rowIndex = 0; rowIndex < currentCard.length; rowIndex++) {
+	for (let rowIndex = 0; rowIndex < currentCard.length; rowIndex++) {
 		// True until proven false
 		let rowCheck = true;
 		for (
-			columnIndex = 0;
+			let columnIndex = 0;
 			columnIndex < currentCard[0].length;
 			columnIndex++
 		) {
@@ -117,9 +120,13 @@ function bingoCheck(index) {
 		bingo = bingo || rowCheck;
 	}
 	// Check Columns
-	for (columnIndex = 0; columnIndex < currentCard[0].length; columnIndex++) {
+	for (
+		let columnIndex = 0;
+		columnIndex < currentCard[0].length;
+		columnIndex++
+	) {
 		let columnCheck = true;
-		for (rowIndex = 0; rowIndex < currentCard.length; rowIndex++) {
+		for (let rowIndex = 0; rowIndex < currentCard.length; rowIndex++) {
 			//
 			columnCheck = columnCheck && cardParallel[rowIndex][columnIndex];
 		}
