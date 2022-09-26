@@ -1,6 +1,6 @@
 import { readFileSync } from "fs";
 
-const puzzleData = readFileSync("./data/raw/04.txt")
+const puzzleData = readFileSync("./2021/data/raw/04.txt")
 	.toString()
 	.replaceAll("\r", "");
 
@@ -31,7 +31,6 @@ let cards = puzzleData.split("\n\n").map((x) => {
 		});
 	});
 });
-
 let bingoCall = cards.splice(0, 1)[0][0][0].split(",");
 
 // Create a parallel array of boolean variables:
@@ -49,11 +48,12 @@ for (cardCount = 0; cardCount < cards.length; cardCount++) {
 }
 
 // Play Bingo!
-let lastCall;
-let finalCard = [];
-let finalParallel = [];
+let winningCard;
+let winningIndex;
+let winningCardParallel;
+let winningCallNumber;
 for (i = 0; i < bingoCall.length; i++) {
-	if (cards.length > 0) {
+	if (!winningCard) {
 		let call = bingoCall[i];
 		console.log(`Current Call: ${call}`);
 		cards.forEach((card, cardIndex) => {
@@ -65,47 +65,35 @@ for (i = 0; i < bingoCall.length; i++) {
 					}
 				});
 			});
-		});
-		cards.forEach((card, cardIndex) => {
 			if (bingoCheck(cardIndex)) {
-				console.log(`Winning card at index ${cardIndex}!`);
-				console.log(cards[cardIndex]);
-				console.log(parallel[cardIndex]);
-				if (cards.length == 1) {
-					console.log(`Last Call: ${call}`);
-					lastCall = call;
-					finalCard = cards[0];
-					finalParallel = parallel[0];
-				}
+				winningCallNumber = call;
+				winningIndex = cardIndex;
+				winningCard = card;
+				winningCardParallel = parallel[cardIndex];
 
-				cards.splice(cardIndex, 1);
-				parallel.splice(cardIndex, 1);
-				console.log(`${cards.length} cards remaining`);
+				console.log(`Winning card is at index ${winningIndex}!`);
+				console.log(winningCard);
+				console.log(winningCardParallel);
 			}
 		});
-	} else {
-		continue;
 	}
 }
 /*
  * Post-bingo operations to calculate desired number
  */
-console.log(`Remaining card:`);
-console.log(finalCard);
-console.log(finalParallel);
 let remainingCellsOnCard = [];
 let remainingSum = 0;
-finalParallel.forEach((row, rowIndex) => {
+winningCardParallel.forEach((row, rowIndex) => {
 	row.forEach((cell, cellIndex) => {
 		if (!cell) {
-			remainingCellsOnCard.push(finalCard[rowIndex][cellIndex]);
-			remainingSum += parseInt(finalCard[rowIndex][cellIndex]);
+			remainingCellsOnCard.push(winningCard[rowIndex][cellIndex]);
+			remainingSum += parseInt(winningCard[rowIndex][cellIndex]);
 		}
 	});
 });
 console.log(
-	`Remaining Numbers: ${remainingCellsOnCard}\nRemaining Number Sum: ${remainingSum}\nNumber to submit: ${remainingSum} * ${lastCall} = ${
-		remainingSum * lastCall
+	`Remaining Numbers: ${remainingCellsOnCard}\nRemaining Number Sum: ${remainingSum}\nNumber to submit: ${remainingSum} * ${winningCallNumber} = ${
+		remainingSum * winningCallNumber
 	}`
 );
 

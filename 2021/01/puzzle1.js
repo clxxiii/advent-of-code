@@ -1,6 +1,6 @@
 import { readFileSync } from "fs";
 
-let data = readFileSync("./data/raw/01.txt")
+let data = readFileSync("./2021/data/raw/01.txt")
 	.toString()
 	.split("\r\n")
 	.map((x) => parseInt(x));

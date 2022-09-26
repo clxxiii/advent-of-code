@@ -31,7 +31,7 @@ function drawMap(data, size) {
 	}
 
 	let imgExport = canvas.toBuffer("image/png");
-	writeFileSync("./05/map.png", imgExport);
+	writeFileSync("./2021/05/map.png", imgExport);
 }
 
 export default drawMap;
