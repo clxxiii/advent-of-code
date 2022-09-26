@@ -1,5 +1,7 @@
 import { readFileSync } from "fs";
-const data = readFileSync("./2021/data/raw/03.txt");
+let data: Array<string> = readFileSync("./2021/data/raw/03.txt")
+	.toString()
+	.split("\r\n");
 
 // const data =
 // 	"00100\n11110\n10110\n10111\n10101\n01111\n00111\n11100\n10000\n11001\n00010\n01010";
@@ -24,10 +26,10 @@ console.log(
 function dataChecker(arr, checkOxy, i) {
 	let zeroes = 0;
 	let ones = 0;
-	let zeroIndexes = [];
-	let oneIndexes = [];
+	let zeroIndexes: number[] = [];
+	let oneIndexes: number[] = [];
 
-	for (v = 0; v < arr.length; v++) {
+	for (let v = 0; v < arr.length; v++) {
 		let character = arr[v][i];
 		if (character == "0") {
 			zeroes++;
@@ -61,7 +63,7 @@ function dataChecker(arr, checkOxy, i) {
 }
 
 function removeIndexes(arr, indexes) {
-	for (i = indexes.length - 1; i >= 0; i--) {
+	for (let i = indexes.length - 1; i >= 0; i--) {
 		arr.splice(indexes[i], 1);
 	}
 	return arr;

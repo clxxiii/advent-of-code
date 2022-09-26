@@ -1,16 +1,16 @@
 import { readFileSync } from "fs";
-let data = readFileSync("./2021/data/raw/03.txt");
+let data: Array<string> = readFileSync("./2021/data/raw/03.txt")
+	.toString()
+	.split("\r\n");
 
 // data =
 // 	"00100\n11110\n10110\n10111\n10101\n01111\n00111\n11100\n10000\n11001\n00010\n01010";
 
-data = data.toString().split("\r\n");
-
 let gamma = "";
-for (i = 0; i < data[0].length; i++) {
+for (let i = 0; i < data[0].length; i++) {
 	let zeroes = 0;
 	let ones = 0;
-	for (v = 0; v < data.length; v++) {
+	for (let v = 0; v < data.length; v++) {
 		let character = data[v][i];
 		if (character == "0") {
 			zeroes++;
@@ -29,6 +29,7 @@ console.log(`Gamma Rate: ${gamma} (${parseInt(gamma, 2)})`);
 
 let epsilon = gamma
 	.split("")
+	.map((x) => parseInt(x))
 	.map((x) => (x ^= 1))
 	.join("");
 

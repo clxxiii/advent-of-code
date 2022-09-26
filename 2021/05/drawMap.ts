@@ -12,7 +12,7 @@ let colors = [
 	"#9000FF",
 ];
 
-function drawMap(data, size) {
+function drawMap(data: number[][], size: number) {
 	let imgFactor = 1;
 
 	let canvas = createCanvas(size * imgFactor, size * imgFactor);

@@ -1,23 +1,28 @@
 import { readFileSync } from "fs";
-import decodeData from "./decoder";
+import { decodeData, datapoint } from "./decoder";
 
-let data = readFileSync("./2021/data/raw/02.txt").toString().split("\r\n");
+let data: Array<datapoint> = decodeData(
+	readFileSync("./2021/data/raw/02.txt").toString().split("\r\n")
+);
 
 let hpos = 0;
 let vpos = 0;
 
-data = decodeData(data);
+let aim = 0;
 
-for (i = 0; i < data.length; i++) {
+for (let i = 0; i < data.length; i++) {
 	let direction = data[i].direction;
 	let magnitude = data[i].magnitude;
 
 	if (direction === "forward") {
 		hpos += magnitude;
+		let newDepth = aim * magnitude;
+
+		vpos += newDepth;
 	} else if (direction === "up") {
-		vpos -= magnitude;
+		aim -= magnitude;
 	} else if (direction === "down") {
-		vpos += magnitude;
+		aim += magnitude;
 	}
 }
 

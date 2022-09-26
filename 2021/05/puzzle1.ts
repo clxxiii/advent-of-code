@@ -11,9 +11,9 @@ data = data.filter((line) => {
 
 // Fill an array with zeroes
 let canvasSize = 1000;
-let canvas = [];
+let canvas: number[][] = [];
 for (let x = 0; x < canvasSize; x++) {
-	let row = [];
+	let row: number[] = [];
 	for (let y = 0; y < canvasSize; y++) {
 		row.push(0);
 	}

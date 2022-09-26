@@ -1,14 +1,14 @@
 import { readFileSync } from "fs";
-import decode from "./decoder.js";
+import { decode, line } from "./decoder.js";
 import drawMap from "./drawMap.js";
 
-let data = decode(readFileSync("./2021/data/raw/05.txt").toString());
+let data: line[] = decode(readFileSync("./2021/data/raw/05.txt").toString());
 
 // Fill an array with zeroes
 let canvasSize = 1000;
-let canvas = [];
+let canvas: number[][] = [];
 for (let x = 0; x < canvasSize; x++) {
-	let row = [];
+	let row: number[] = [];
 	for (let y = 0; y < canvasSize; y++) {
 		row.push(0);
 	}
