@@ -4,11 +4,6 @@ import drawMap from "./drawMap.js";
 
 let data = decode(readFileSync("./data/raw/05.txt").toString());
 
-// Only consider horizontal and vertical lines
-data = data.filter((line) => {
-	return line.from.x == line.to.x || line.from.y == line.to.y;
-});
-
 // Fill an array with zeroes
 let canvasSize = 1000;
 let canvas = [];
@@ -55,6 +50,45 @@ for (const line of data) {
 		else if (line.from.y > line.to.y) {
 			for (let i = line.from.y; i >= line.to.y; i--) {
 				canvas[i][line.from.x] += 1;
+			}
+		}
+	}
+	// Diagonal Line
+	else {
+		// Top left to Bottom Right
+		if (line.from.x < line.to.x && line.from.y < line.to.y) {
+			for (let y = line.from.y; y <= line.to.y; y++) {
+				let currentLength = y - line.from.y;
+				let xPos = line.from.x + currentLength;
+
+				canvas[y][xPos] += 1;
+			}
+		}
+		// Bottom Right to Top Left
+		else if (line.from.x > line.to.x && line.from.y > line.to.y) {
+			for (let y = line.from.y; y >= line.to.y; y--) {
+				let currentLength = line.from.y - y;
+				let xPos = line.from.x - currentLength;
+
+				canvas[y][xPos] += 1;
+			}
+		}
+		// Top Right to Bottom Left
+		else if (line.from.x > line.to.x && line.from.y < line.to.y) {
+			for (let y = line.from.y; y <= line.to.y; y++) {
+				let currentLength = y - line.from.y;
+				let xPos = line.from.x - currentLength;
+
+				canvas[y][xPos] += 1;
+			}
+		}
+		// Bottom Left to Top Right
+		else if (line.from.x < line.to.x && line.from.y > line.to.y) {
+			for (let y = line.from.y; y >= line.to.y; y--) {
+				let currentLength = line.from.y - y;
+				let xPos = line.from.x + currentLength;
+
+				canvas[y][xPos] += 1;
 			}
 		}
 	}
