@@ -7,8 +7,6 @@ let fishList: Array<number> = readFileSync("./2021/data/raw/06.txt")
 	.split(",")
 	.map((x) => parseInt(x));
 
-fishList = [3];
-
 let daysToCalculate = 10;
 
 console.log(`Initial State: ${fishList}`);
