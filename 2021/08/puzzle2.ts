@@ -27,6 +27,7 @@ function findNumbers(input: Set<string>[]): Set<string>[] {
 	while (!allNumbersFound) {
 		let segments = input[testNum];
 
+		// Get 1, 4, 7, and 8 based on set size
 		if (!fixedSegNumbersFound) {
 			if (segments.size == 2) {
 				nums[1] = segments;
@@ -47,10 +48,14 @@ function findNumbers(input: Set<string>[]): Set<string>[] {
 		}
 
 		if (fixedSegNumbersFound) {
+			if (segments.size == 5) {
+			}
+
+			if (segments.size == 6) {
+			}
 		}
 		testNum = (testNum + 1) % 10;
 	}
-	// Get 1, 4, 7, and 8 based on set size
 
 	return nums;
 }

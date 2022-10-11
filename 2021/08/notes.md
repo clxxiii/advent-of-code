@@ -43,14 +43,14 @@ Note: All displays and test values should be considered as **sets**. The order o
 
 3: 5 Segments, Contains all segments from 1.
 
-5: 5 Segments, Shares 3 numbers from 4
+5: 5 Segments, Shares 3 segments from 4
 
-2: 5 Segments. The remaining 5 segment number
+2: 5 Segments. Shares 2 segments from 4
 
 6: 6 Segments, Only missing segment is a segment in 1
 
 0: 6 segments, Only missing segment is a segment from 4.
 
-9: 6 Segments, The remaining 6 segment number.
+9: 6 Segments, Only missing segment is not a segment from 4
 
 **Once we find the numbers, we can then just compare each displayed number to the segments in every determined number.**
