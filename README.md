@@ -9,4 +9,3 @@ Inside each year, the `data` folder contains two sets of input data:
 
 Inside each day, marked with the day, the `puzzle1` and `puzzle2` files are the ones that need to be run for the two halves of each puzzle.
 
-<!-- This is a test commit to see if the new ssh verification thing works -->
