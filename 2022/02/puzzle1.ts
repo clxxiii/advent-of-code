@@ -1,22 +1,22 @@
 import { readFileSync } from "fs";
 
-const data = readFileSync("2022/data/raw/02.txt")
+const data: string[] = readFileSync("2022/data/raw/02.txt")
   .toString()
   .split("\n")
   .filter((x) => x != "");
 
-let total = 0;
+let total: number = 0;
 for (const line of data) {
-  let moves = line.split(" ");
-  let score = calculateRound(moves[0], moves[1]);
+  let moves: string[] = line.split(" ");
+  let score: number = calculateRound(moves[0], moves[1]);
   console.log(`${line} Score: ${score}`);
   total += score;
 }
 console.log(`Total: ${total}`);
 
 function calculateRound(them: string, me: string): number {
-  let score = 0;
-  let shapeScore = { X: 1, Y: 2, Z: 3 };
+  let score: number = 0;
+  let shapeScore: object = { X: 1, Y: 2, Z: 3 };
   score += shapeScore[me];
 
   if (
