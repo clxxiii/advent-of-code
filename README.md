@@ -9,3 +9,6 @@ Inside each year, the `data` folder contains two sets of input data:
 
 Inside each day, marked with the day, the `puzzle1` and `puzzle2` files are the ones that need to be run for the two halves of each puzzle.
 
+## During Advent of code
+
+This repo is public, so I'll try my best to avoid posting my solutions until 12-24 hours after the puzzle comes out, that way you can't secure too many points using my code.
