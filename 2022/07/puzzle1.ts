@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 let data: string[] = readFileSync("2022/data/raw/07.txt")
   .toString()
-  .split("\n")
+  .split("\r\n")
   .filter((x) => x != "");
 
 let root: object = {};
